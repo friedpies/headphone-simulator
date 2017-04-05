@@ -5,31 +5,35 @@ import g4p_controls.*;
 import processing.sound.*;
 
 SoundFile audioFile;
-Amplitude amp;
-AudioIn in;
+FFT fft;
+AudioDevice device;
 color[] ledColors = new color[8]; 
 
+float scale = 5;
+int deviceBands = 128;
+int fftBands = 16;
+float smoothFactor = 0.1;
+float[] sum = new float[fftBands];
+String mode = "OFFMODE";
+
 public void setup() {
-  size(1200, 500, JAVA2D);
+  size(1200, 1000, P3D);
   createGUI();
   customGUI();
-  amp = new Amplitude(this);
-  in = new AudioIn(this, 0);
-  in.start();
-  amp.input(in);
+  device = new AudioDevice(this, 44000, deviceBands);
+
+  calculateColors(mode);
   // Place your setup code here
 }
 
 public void draw() {
   background(0);
   stroke(50);
-  calculateColors();
+  calculateColors(mode);
   drawLEDS();
-  println(amp.analyze());
 }
 
-// Use this method to add additional statements
-// to customise the GUI controls
+
 public void customGUI() {
 }
 
