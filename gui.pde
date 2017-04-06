@@ -49,8 +49,10 @@ public void playButtonListener(GButton source, GEvent event) { //_CODE_:playButt
     println("no file selected");
   } else {
     audioFile.play();
-    fft = new FFT(this, fftBands);
-    fft.input(audioFile);
+    //fft = new FFT(this, fftBands);
+    //fft.input(audioFile);
+    rms = new Amplitude(this);
+    rms.input(audioFile);
   }
 } //_CODE_:playButton:707513:
 

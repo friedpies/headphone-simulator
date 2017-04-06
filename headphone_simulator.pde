@@ -5,21 +5,27 @@ import g4p_controls.*;
 import processing.sound.*;
 
 SoundFile audioFile;
-FFT fft;
+//FFT fft;
+Amplitude rms;
 AudioDevice device;
 color[] ledColors = new color[8]; 
 
+float lightScaler = 80;
 float scale = 5;
 int deviceBands = 128;
-int fftBands = 16;
-float smoothFactor = 0.1;
-float[] sum = new float[fftBands];
+int ledBin = 0;
+//int fftBands = 16;
+float smoothFactor = 0.05;
+float rmsSum;
+int rmsScaler;
+//float[] sum = new float[fftBands];
 String mode = "OFFMODE";
 
 public void setup() {
   size(1200, 1000, P3D);
   createGUI();
   customGUI();
+  lights();
   device = new AudioDevice(this, 44000, deviceBands);
 
   calculateColors(mode);

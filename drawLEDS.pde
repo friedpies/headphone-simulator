@@ -7,13 +7,26 @@ public void calculateColors(String mode) {
     break;
 
     case("ONMODE"):
-    fft.analyze();
+    //fft.analyze();
+    rmsSum += (rms.analyze() - rmsSum) * smoothFactor;
+    rmsScaler = int(rmsSum * 500);
+    ledBin = rmsScaler / 10;
+    
+    println(rmsScaler);
     for (int i = 0; i < 8; i++) {
-      sum[i] += (fft.spectrum[i] - sum[i]) * smoothFactor; 
-      color from = color(0, 255, 255);
-      color to = color(0, 0, 0);
-      ledColors[i] = lerpColor(to, from, sum[i] * 10);
+      //sum[i] += (fft.spectrum[i] - sum[i]) * smoothFactor; 
+      color from = color(255, 0, 255, 255);
+      color to = color(255, 0, 0, 0);
+      if (i <= ledBin){
+      //ledColors[i] = lerpColor(to, from, sum[i] * 10);
+      ledColors[i] = lerpColor(to, from, rmsSum * 4 );
+      }
+      else {
+       ledColors[i] = color(0); 
+      }
+      
     }
+    
     break;
   }
 }
