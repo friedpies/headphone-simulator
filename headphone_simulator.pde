@@ -8,12 +8,13 @@ SoundFile audioFile;
 //FFT fft;
 Amplitude rms;
 AudioDevice device;
-color ledColors[] = new color[8]; 
+color[] ledColors = new color[8]; 
 
 float lightScaler = 80;
 float scale = 5;
 int deviceBands = 128;
 int ledBin = 0;
+<<<<<<< HEAD
 int ledFade = 0;
 float color1Hue = 0;
 float color2Hue = 180;
@@ -22,26 +23,30 @@ float rmsSumSmoothed;
 int rmsScalerRaw;
 int rmsScalerSmoothed;
 int colorCalc;
+=======
+//int fftBands = 16;
+float smoothFactor = 0.05;
+float rmsSum;
+int rmsScaler;
+>>>>>>> parent of 5fd4302... Added mode switching
 //float[] sum = new float[fftBands];
-final String ONOFF[] = {"OFF", "ON"};
-final String DISPLAYMODE[] = {"MODE1", "MODE2", "MODE3"};
-String currentOnOffState = ONOFF[0];
-String currentDisplayMode = DISPLAYMODE[2];
+String mode = "OFFMODE";
 
 public void setup() {
   size(1200, 1000, P3D);
   createGUI();
   customGUI();
-  colorMode(HSB, 360, 100, 100);
   lights();
   device = new AudioDevice(this, 44000, deviceBands);
-  calculateColors(currentOnOffState);
+
+  calculateColors(mode);
+  // Place your setup code here
 }
 
 public void draw() {
   background(0);
   stroke(50);
-  calculateColors(currentOnOffState);
+  calculateColors(mode);
   drawLEDS();
 }
 

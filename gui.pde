@@ -26,12 +26,12 @@ public void fileChooserListener(GButton source, GEvent event) { //_CODE_:fileCho
 
 public void onButtonListener(GButton source, GEvent event) { //_CODE_:onButton:241170:
   println("onButton - GButton >> GEvent." + event + " @ " + millis());
-  currentOnOffState = ONOFF[1];
+  mode = "ONMODE";
 } //_CODE_:onButton:241170:
 
 public void offButtonListener(GButton source, GEvent event) { //_CODE_:offButton:456926:
   println("offButton - GButton >> GEvent." + event + " @ " + millis());
-  currentOnOffState = ONOFF[0];
+  mode = "OFFMODE";
 } //_CODE_:offButton:456926:
 
 public void volumeKnobListener(GKnob source, GEvent event) { //_CODE_:volumeKnob:757063:
@@ -64,24 +64,6 @@ public void stopButtonListener(GButton source, GEvent event) { //_CODE_:stopButt
     audioFile.stop();
   }
 } //_CODE_:stopButton:521197:
-
-public void mode1ButtonListener(GButton source, GEvent event) { //_CODE_:mode1Button:417373:
-  println("mode1Button - GButton >> GEvent." + event + " @ " + millis());
-  clearColors();
-  currentDisplayMode = DISPLAYMODE[0];
-} //_CODE_:mode1Button:417373:
-
-public void mode2ButtonListener(GButton source, GEvent event) { //_CODE_:mode2Button:847692:
-  println("mode2Button - GButton >> GEvent." + event + " @ " + millis());
-  clearColors();
-  currentDisplayMode = DISPLAYMODE[1];
-} //_CODE_:mode2Button:847692:
-
-public void mode3ButtonListener(GButton source, GEvent event) { //_CODE_:mode3Button:463566:
-  println("mode3Button - GButton >> GEvent." + event + " @ " + millis());
-  clearColors();
-  currentDisplayMode = DISPLAYMODE[2];
-} //_CODE_:mode3Button:463566:
 
 
 
@@ -135,18 +117,6 @@ public void createGUI(){
   stopButton.setTextBold();
   stopButton.setLocalColorScheme(GCScheme.RED_SCHEME);
   stopButton.addEventHandler(this, "stopButtonListener");
-  mode1Button = new GButton(this, 30, 400, 80, 30);
-  mode1Button.setText("Mode 1");
-  mode1Button.setTextBold();
-  mode1Button.addEventHandler(this, "mode1ButtonListener");
-  mode2Button = new GButton(this, 30, 450, 80, 30);
-  mode2Button.setText("Mode 2");
-  mode2Button.setTextBold();
-  mode2Button.addEventHandler(this, "mode2ButtonListener");
-  mode3Button = new GButton(this, 30, 500, 80, 30);
-  mode3Button.setText("Mode 3");
-  mode3Button.setTextBold();
-  mode3Button.addEventHandler(this, "mode3ButtonListener");
 }
 
 // Variable declarations 
@@ -158,6 +128,3 @@ GKnob volumeKnob;
 GLabel controlLabel; 
 GButton playButton; 
 GButton stopButton; 
-GButton mode1Button; 
-GButton mode2Button; 
-GButton mode3Button; 
