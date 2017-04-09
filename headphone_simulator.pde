@@ -8,34 +8,37 @@ SoundFile audioFile;
 //FFT fft;
 Amplitude rms;
 AudioDevice device;
-color[] ledColors = new color[8]; 
+color ledColors[] = new color[8]; 
 
 float lightScaler = 80;
 float scale = 5;
 int deviceBands = 128;
 int ledBin = 0;
-//int fftBands = 16;
-float smoothFactor = 0.05;
-float rmsSum;
-int rmsScaler;
+int ledFade = 0;
+float rmsSumRaw;
+float rmsSumSmoothed;
+int rmsScalerRaw;
+int rmsScalerSmoothed;
 //float[] sum = new float[fftBands];
-String mode = "OFFMODE";
+final String ONOFF[] = {"OFF", "ON"};
+final String DISPLAYMODE[] = {"MODE1", "MODE2", "MODE3"};
+String currentOnOffState = ONOFF[0];
+String currentDisplayMode = DISPLAYMODE[2];
 
 public void setup() {
   size(1200, 1000, P3D);
   createGUI();
   customGUI();
+  colorMode(HSB, 360, 100, 100);
   lights();
   device = new AudioDevice(this, 44000, deviceBands);
-
-  calculateColors(mode);
-  // Place your setup code here
+  calculateColors(currentOnOffState);
 }
 
 public void draw() {
   background(0);
   stroke(50);
-  calculateColors(mode);
+  calculateColors(currentOnOffState);
   drawLEDS();
 }
 
