@@ -9,6 +9,7 @@ public void calculateColors(String mode) {
     ledBin = rmsScalerSmoothed / 10; //calculate bargraph ints
     ledFade = rmsScalerSmoothed % 10; //calculate bargraph remainder
 
+
     switch(currentDisplayMode) {
       case("MODE1"): //outside -> inside
       calculateMode1();
@@ -52,11 +53,12 @@ public void drawLEDS() {
 }
 
 public void calculateRMS() {
-  rmsSumRaw += (rms.analyze() - rmsSumRaw) * .025;
-  rmsSumSmoothed += (rms.analyze() - rmsSumRaw) * .025;
+  rmsSumRaw += (rms.analyze() - rmsSumRaw) * .035;
+  rmsSumSmoothed += (rms.analyze() - rmsSumRaw) * .035;
 
   rmsScalerRaw = int(rmsSumRaw * 250);
   rmsScalerSmoothed = int(rmsSumSmoothed * 250);
+  println(rmsScalerRaw);
 }
 
 public void calculateMode1() {
@@ -87,7 +89,7 @@ public void calculateMode2() {
 
   for (int i = 0; i < 4; i++) {
     if (i < ledBin) {
-      ledColors[i + 3] = color(rmsScalerRaw * 1.5, 100, (rmsScalerRaw * 3) * float(i + 1)*.5);
+      ledColors[i + 3] = color(rmsScalerRaw * 1.5, 100, (rmsScalerRaw * 3));
       ledColors[4-i] =  color(rmsScalerRaw * 1.5, 100, (rmsScalerRaw * 3));
     } else {
       ledColors[i + 3] = color(0);
@@ -106,14 +108,14 @@ public void calculateMode3() {
   }
   for (int i = 0; i < 8; i++) {
     if (i < ledBin) {
-      ledColors[i] = color(rmsScalerRaw * 1.5, 100, (rmsScalerRaw * 3));
+      ledColors[i] = color(rmsScalerRaw * 1.5, 100, 100 * pow(rmsScalerRaw / 40), exp(1)));
     } else {
       ledColors[i] = color(0);
     }
   }
-  if (ledFade != 0) {
-    ledColors[ledBin] = color(rmsScalerRaw * 1.5, 100, 100 * (float(ledFade) / 10));
-  }
+  //if (ledFade != 0) {
+  //  ledColors[ledBin] = color(rmsScalerRaw * 1.5, 100, 100 *  pow((float(ledFade) / 10), exp(1)));
+  //}
 }
 
 public void clearColors() {
