@@ -17,8 +17,10 @@ float filteredSignal2, filteredSignal2Prev;
 Amplitude rms;
 AudioDevice device;
 color ledColors[] = new color[8]; 
+color colorChoice = color(0);
 
 
+float maxVolumeDetected = 0;
 int deviceBands = 128;
 int ledBin = 0;
 int ledFade = 0;
@@ -37,6 +39,7 @@ public void setup() {
   createGUI();
   customGUI();
   colorMode(HSB, 360, 100, 100);
+
   device = new AudioDevice(this, 44000, deviceBands);
   calculateColors(currentOnOffState);
 
@@ -52,10 +55,12 @@ public void setup() {
 public void draw() {
   background(0);
   stroke(50);
+
   calculateColors(currentOnOffState);
-  fadeLEDS();
+  addFade();
+
   drawLEDS();
-  fill(255);
+
   //rect(width / 2 - 300, height / 2, int(sourceSignal * 500), int(sourceSignal * 500));
   //rect(width / 2, height / 2, int(filteredSignal1 * 500), int(filteredSignal1 * 500));
   //rect(width / 2 + 300, height / 2, int(filteredSignal2 * 500), int(filteredSignal2 * 500));
