@@ -17,7 +17,11 @@ float filteredSignal2, filteredSignal2Prev;
 Amplitude rms;
 AudioDevice device;
 color ledColors[] = new color[8]; 
-color colorChoice = color(0);
+color colorChoice =   color(0);
+int hue = 0;
+int saturation = 0;
+int brightness = 0;
+int opacity = 100;
 
 
 float maxVolumeDetected = 0;
@@ -39,8 +43,8 @@ public void setup() {
   size(1200, 1000, P3D);
   createGUI();
   customGUI();
-  colorMode(HSB, 360, 100, 100, 100);
-
+  //noFill();
+  colorMode(HSB, 360, 100, 100, 100);  
   device = new AudioDevice(this, 44000, deviceBands);
   calculateColors(currentOnOffState);
 
@@ -59,12 +63,12 @@ public void draw() {
 
   calculateColors(currentOnOffState);
   addFade();
-
   drawLEDS();
 
-  rect(width / 2 - 200, 800, int(sourceSignal * 300), int(sourceSignal * 300));
-  rect(width / 2, 800, int(filteredSignal1 * 300), int(filteredSignal1 * 300));
-  rect(width / 2 + 200, 800, int(filteredSignal2 * 300), int(filteredSignal2 * 300));
+
+  //rect(width / 2 - 200, 800, int(sourceSignal * 300), int(sourceSignal * 300));
+  //rect(width / 2, 800, int(filteredSignal1 * 300), int(filteredSignal1 * 300));
+  //rect(width / 2 + 200, 800, int(filteredSignal2 * 300), int(filteredSignal2 * 300));
   //println(int(byte(color(0, 255) >> 24)));
 }
 
