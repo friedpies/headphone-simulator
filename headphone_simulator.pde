@@ -1,53 +1,64 @@
-// Need G4P library
-
-
 import g4p_controls.*;
 import processing.sound.*;
+import signal.library.*;
 
 SoundFile audioFile;
-//FFT fft;
+SignalFilter filter1;
+SignalFilter filter2;
+
+float sourceSignal, sourceSignalPrev;
+float minCutoff1 = 1.0;
+float beta1 = .7;
+float filteredSignal1, filteredSignal1Prev; 
+float minCutoff2 = 2.6;
+float beta2 = 5.7;
+float filteredSignal2, filteredSignal2Prev;
+
 Amplitude rms;
 AudioDevice device;
-color[] ledColors = new color[8]; 
+color ledColors[] = new color[8]; 
 
-float lightScaler = 80;
-float scale = 5;
+
 int deviceBands = 128;
 int ledBin = 0;
-<<<<<<< HEAD
 int ledFade = 0;
-float color1Hue = 0;
-float color2Hue = 180;
 float rmsSumRaw;
 float rmsSumSmoothed;
 int rmsScalerRaw;
 int rmsScalerSmoothed;
-int colorCalc;
-=======
-//int fftBands = 16;
-float smoothFactor = 0.05;
-float rmsSum;
-int rmsScaler;
->>>>>>> parent of 5fd4302... Added mode switching
-//float[] sum = new float[fftBands];
-String mode = "OFFMODE";
+
+final String ONOFF[] = {"OFF", "ON"};
+final String DISPLAYMODE[] = {"MODE1", "MODE2", "MODE3"};
+String currentOnOffState = ONOFF[0];
+String currentDisplayMode = DISPLAYMODE[2];
 
 public void setup() {
   size(1200, 1000, P3D);
   createGUI();
   customGUI();
-  lights();
+  colorMode(HSB, 360, 100, 100);
   device = new AudioDevice(this, 44000, deviceBands);
+  calculateColors(currentOnOffState);
 
-  calculateColors(mode);
-  // Place your setup code here
+  filter1 = new SignalFilter(this);
+  filter1.setMinCutoff(minCutoff1);
+  filter1.setBeta(beta1);
+
+  filter2 = new SignalFilter(this);
+  filter2.setMinCutoff(minCutoff2);
+  filter2.setBeta(beta2);
 }
 
 public void draw() {
   background(0);
   stroke(50);
-  calculateColors(mode);
+  calculateColors(currentOnOffState);
+  fadeLEDS();
   drawLEDS();
+  fill(255);
+  //rect(width / 2 - 300, height / 2, int(sourceSignal * 500), int(sourceSignal * 500));
+  //rect(width / 2, height / 2, int(filteredSignal1 * 500), int(filteredSignal1 * 500));
+  //rect(width / 2 + 300, height / 2, int(filteredSignal2 * 500), int(filteredSignal2 * 500));
 }
 
 
