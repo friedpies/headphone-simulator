@@ -57,11 +57,11 @@ public void calculateRMS() {
   filteredSignal2Prev = filteredSignal2;
   filteredSignal2 = filter2.filterUnitFloat(sourceSignal);
   sourceSignal = rms.analyze();
-  colorChoice = color(map(filteredSignal1, 0, 0.5, 307, 355), 100 - map(filteredSignal2, 0, 0.5, 1, 100), map(filteredSignal2, 0, 0.5, 50, 100));
+  colorChoice = color(map(filteredSignal1, 0, 0.4, 0, 200), 100 - map(filteredSignal1, 0, 0.4, 1, 60), 100);
 
 
   ledBin = int(filteredSignal1 * 30); //calculate bargraph ints
-  println(ledBin);
+  //println(ledBin);
   ledFade = int(filteredSignal2 * 30) % 10; //calculate bargraph remainder
 
 
@@ -75,8 +75,8 @@ public void calculateRMS() {
 public void calculateMode1() {
 
   ledBin = int(filteredSignal1 * 15); //calculate bargraph ints
-  println(ledBin);
-  ledFade = int(filteredSignal2 * 15) % 10; //calculate bargraph remainder
+  //println(ledBin);
+  ledFade = int(filteredSignal2 * 150) % 10; //calculate bargraph remainder
 
   if (ledBin > 4) { 
     ledBin = 4;
@@ -92,8 +92,8 @@ public void calculateMode1() {
 
 public void calculateMode2() {
   ledBin = int(filteredSignal1 * 15); //calculate bargraph ints
-  println(ledBin);
-  ledFade = int(filteredSignal2 * 15) % 10; //calculate bargraph remainder
+  //println(ledBin);
+  ledFade = int(filteredSignal2 * 150) % 10; //calculate bargraph remainder
 
   if (ledBin > 4) { 
     ledBin = 4;
@@ -109,10 +109,7 @@ public void calculateMode2() {
 
 public void calculateMode3() {
   ledBin = int(filteredSignal1 * 30); //calculate bargraph ints
-  print(ledBin); 
-  print("  ");
   ledFade = int(filteredSignal2 * 300) % 10; //calculate bargraph remainder
-  println(ledFade);
   if (ledBin > 7) {
     ledBin = 7;
   }
@@ -131,6 +128,10 @@ public void clearColors() {
 
 public void addFade() {
   for (int i = 0; i < 8; i++) {
-    ledColors[i] -= color(0, 5);
+    
+    if (int(byte(ledColors[i] >> 24)) >= 10 ) {
+      ledColors[i] -= color(0, 10);
+    }
   }
+  println(int(byte(ledColors[0] >> 24)));
 }

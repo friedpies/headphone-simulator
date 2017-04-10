@@ -32,13 +32,14 @@ int rmsScalerSmoothed;
 final String ONOFF[] = {"OFF", "ON"};
 final String DISPLAYMODE[] = {"MODE1", "MODE2", "MODE3"};
 String currentOnOffState = ONOFF[0];
-String currentDisplayMode = DISPLAYMODE[2];
+String currentDisplayMode = DISPLAYMODE[0];
+
 
 public void setup() {
   size(1200, 1000, P3D);
   createGUI();
   customGUI();
-  colorMode(HSB, 360, 100, 100);
+  colorMode(HSB, 360, 100, 100, 100);
 
   device = new AudioDevice(this, 44000, deviceBands);
   calculateColors(currentOnOffState);
@@ -61,9 +62,10 @@ public void draw() {
 
   drawLEDS();
 
-  //rect(width / 2 - 300, height / 2, int(sourceSignal * 500), int(sourceSignal * 500));
-  //rect(width / 2, height / 2, int(filteredSignal1 * 500), int(filteredSignal1 * 500));
-  //rect(width / 2 + 300, height / 2, int(filteredSignal2 * 500), int(filteredSignal2 * 500));
+  rect(width / 2 - 200, 800, int(sourceSignal * 300), int(sourceSignal * 300));
+  rect(width / 2, 800, int(filteredSignal1 * 300), int(filteredSignal1 * 300));
+  rect(width / 2 + 200, 800, int(filteredSignal2 * 300), int(filteredSignal2 * 300));
+  //println(int(byte(color(0, 255) >> 24)));
 }
 
 
